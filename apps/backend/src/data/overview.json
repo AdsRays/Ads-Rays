@@ -1,0 +1,7 @@
+{
+  "red": { "label": "Сливает", "spend": 1200, "orders": 18, "roi": -0.25 },
+  "yellow": { "label": "На грани", "spend": 900, "orders": 25, "roi": 0.05 },
+  "green": { "label": "Золото", "spend": 700, "orders": 40, "roi": 0.45 }
+}
+
+
