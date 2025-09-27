@@ -1,0 +1,41 @@
+﻿{
+    "name":  "adsrays-demo",
+    "private":  true,
+    "version":  "0.1.0",
+    "type":  "module",
+    "packageManager":  "pnpm@9.0.0",
+    "engines":  {
+                    "node":  "\u003e=20.0.0",
+                    "pnpm":  "\u003e=9.0.0"
+                },
+    "scripts":  {
+                    "dev":  "concurrently -n backend,frontend -c green,cyan \"pnpm --filter @adsrays/backend dev\" \"pnpm --filter @adsrays/frontend dev\"",
+                    "build":  "pnpm -r run build",
+                    "start":  "pnpm --filter @adsrays/backend start",
+                    "test":  "pnpm -r run test",
+                    "lint":  "pnpm -r run lint",
+                    "lint:fix":  "pnpm -r run lint:fix",
+                    "format":  "prettier --write .",
+                    "format:check":  "prettier --check .",
+                    "typecheck":  "pnpm -r run typecheck",
+                    "prepare":  "husky install"
+                },
+    "dependencies":  {
+                         "concurrently":  "^8.2.2",
+                         "dotenv":  "^16.4.5"
+                     },
+    "devDependencies":  {
+                            "husky":  "^9.0.11",
+                            "lint-staged":  "^15.2.2",
+                            "prettier":  "^3.3.3"
+                        },
+    "lint-staged":  {
+                        "*.{ts,tsx,js,jsx}":  [
+                                                  "eslint --fix",
+                                                  "prettier --write"
+                                              ],
+                        "*.{json,md,yml,yaml}":  [
+                                                     "prettier --write"
+                                                 ]
+                    }
+}
