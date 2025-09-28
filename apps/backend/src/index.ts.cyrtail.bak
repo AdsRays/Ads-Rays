@@ -42,10 +42,8 @@ pdf.setKeywords(["Привет","кириллица"]);
     page.drawText("Проверка кириллицы: Привет, мир!", { x: 50, y: height - 120, size: 14, font, color: rgb(0,0,0) });
 
     const bytes = await pdf.save({ useObjectStreams: false });
-    res.setHeader("Content-Type","application/pdf");
-// Добавляем PDF-комментарий с кириллицей для стабильного smoke-теста (игнорируется ридерами)
-const outBuf = Buffer.concat([Buffer.from(bytes), Buffer.from("\n% CHECK Привет\n","utf8")]);
-res.send(outBuf);
+    res.setHeader("Content-Type", "application/pdf");
+    res.send(Buffer.from(bytes));
   } catch (e: any) {
     console.error("PDF generation error:", e?.message || e, e?.stack);
     res.status(500).send("PDF generation error");
@@ -55,5 +53,4 @@ res.send(outBuf);
 // Старт сервера
 const PORT = process.env.PORT ? Number(process.env.PORT) : 4000;
 app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));
-
 
