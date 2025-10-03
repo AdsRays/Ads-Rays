@@ -18,3 +18,27 @@ Thumbs.db
 # Env (пример ниже добавим отдельно)
 .env
 .env.local
+# Backups/temps
+*.bak*
+*.log
+*.tsbuildinfo
+
+# Builds/caches
+dist/
+build/
+.vite/
+.cache/
+.tmp/
+.pnpm-store/
+
+# Node/IDE/OS
+node_modules/
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Env
+.env
+.env.*.local
+apps/frontend/.env.local
