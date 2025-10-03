@@ -10,7 +10,8 @@
     "test": "vitest",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "smoke": "powershell -ExecutionPolicy Bypass -File ../../scripts/smoke.ps1"
   },
   "dependencies": {
     "axios": "^1.7.5",
@@ -45,4 +46,3 @@
     "vitest": "^2.0.5"
   }
 }
-

@@ -1,5 +1,5 @@
 ﻿import express from "express";
-import reportRouter from "./routes/report";import * as fs from "fs";
+import * as fs from "fs";
 import { fileURLToPath } from "url";
 import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
@@ -7,9 +7,8 @@ import fontkit from "@pdf-lib/fontkit";
 const WHO = "adsrays-cyr-v1";
 
 const app = express();
-app.use((req,res,next)=>{ const o=req.headers.origin||"*"; res.header("Access-Control-Allow-Origin", o); res.header("Vary","Origin"); res.header("Access-Control-Allow-Methods","GET,POST,OPTIONS"); res.header("Access-Control-Allow-Headers","Content-Type"); if(req.method==="OPTIONS") return res.sendStatus(204); next(); });
 app.use(express.json());
-app.use("/api", reportRouter);
+app.use((req,res,next)=>{res.header("Access-Control-Allow-Origin","*");res.header("Access-Control-Allow-Headers","Content-Type, Authorization");res.header("Access-Control-Allow-Methods","GET,POST,OPTIONS");if(req.method==="OPTIONS")return res.sendStatus(200);next();});
 app.use((req,_res,next)=>{ console.log(`${req.method} ${req.url}`); next(); });
 
 const FONT_PATH = fileURLToPath(new URL("../../../data/fonts/NotoSans-Regular.ttf", import.meta.url));
@@ -70,23 +69,3 @@ app.get("/api/report/pdf", async (_req, res) => {
     res.status(500).send("PDF generation error");
   }
 });
-/** Общий обработчик ответа PDF (GET/POST) */
-async function generatePdfResponse(_req: any, res: any) {
-  try {
-    const pdf = await PDFDocument.create();
-    pdf.setTitle("Проверка кириллицы - Привет, мир!");
-    pdf.setAuthor("AdsRays"); pdf.setCreator("AdsRays"); pdf.setProducer("AdsRays pdf-lib");
-    const page = pdf.addPage([595, 842]); // A4
-    const font = await pdf.embedFont(FONT_BYTES);
-    const { height } = page.getSize();
-    page.drawText("Hello World (English OK)", { x: 50, y: height - 100, size: 14, font, color: rgb(0,0,0) });
-    page.drawText("Проверка кириллицы: Привет, мир!", { x: 50, y: height - 120, size: 14, font, color: rgb(0,0,0) });
-    const bytes = await pdf.save({ useObjectStreams: false });
-    res.setHeader("Content-Type", "application/pdf");
-    res.send(Buffer.from(bytes));
-  } catch (e) {
-    console.error(e);
-    res.status(500).send("PDF generation error");
-  }
-}
-

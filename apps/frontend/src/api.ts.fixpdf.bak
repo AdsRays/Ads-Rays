@@ -1,0 +1,39 @@
+﻿import axios from "axios";
+const api = axios.create({ baseURL: import.meta.env.VITE_API_BASE || "/api" });
+
+export const getOverview        = async () => (await api.get("/demo/overview")).data;
+export const getRecommendations = async () => (await api.get("/demo/recommendations")).data;
+export const getCreatives       = async () => (await api.get("/demo/creatives")).data;
+
+export const generatePdf = async (payload: any) =>
+  (await api.post("/report/pdf", payload, { responseType: "blob" })).data;
+export const API_BASE: string = (import.meta as any).env?.VITE_API_BASE || "http://localhost:4000";
+
+export async function postForecast(payload: any): Promise<any> {
+  const res = await fetch(`${API_BASE}/api/forecast`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload ?? {})
+  });
+  if (!res.ok) throw new Error(`postForecast ${res.status}`);
+  return res.json().catch(() => ({}));
+}
+
+export async function uploadCsv(file: File): Promise<any> {
+  const fd = new FormData(); fd.append("file", file);
+  const res = await fetch(`${API_BASE}/api/upload/csv`, { method: "POST", body: fd });
+  if (!res.ok) throw new Error(`uploadCsv ${res.status}`);
+  return res.json().catch(() => ({}));
+}
+
+export async function uploadScreenshot(file: File): Promise<any> {
+  const fd = new FormData(); fd.append("file", file);
+  const res = await fetch(`${API_BASE}/api/upload/screenshot`, { method: "POST", body: fd });
+  if (!res.ok) throw new Error(`uploadScreenshot ${res.status}`);
+  return res.json().catch(() => ({}));
+}
+
+/api/report/pdf`, { method: "POST" });
+  if (!res.ok) throw new Error(`generatePdf ${res.status}`);
+  return res.blob();
+}
+
+

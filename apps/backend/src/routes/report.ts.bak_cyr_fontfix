@@ -1,36 +1,14 @@
 ﻿import { Router } from "express";
-import { fileURLToPath } from "url";
 import * as fs from "fs";
 import path from "path";
 import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
-const FONT_BYTES = (() => {
-  // Проверяем несколько относительных путей от текущего модуля
-  const candidates = [
-    new URL("../../data/fonts/NotoSans-Regular.ttf", import.meta.url),    // apps/backend/src/routes -> apps/backend/data/...
-    new URL("../../../data/fonts/NotoSans-Regular.ttf", import.meta.url), // apps/backend/src/routes -> data/...
-    new URL("../data/fonts/NotoSans-Regular.ttf", import.meta.url)        // apps/backend/src/routes -> apps/backend/src/data (если так)
-  ];
-  for (const u of candidates) {
-    try {
-      const p = fileURLToPath(u);
-      return fs.readFileSync(p);
-    } catch {}
-  }
-  // Последняя попытка: прямые пути, если dev-сборка запущена из корня
-  const direct = [
-    "apps/backend/data/fonts/NotoSans-Regular.ttf",
-    "data/fonts/NotoSans-Regular.ttf"
-  ];
-  for (const p of direct) {
-    try { return fs.readFileSync(p); } catch {}
-  }
-  throw new Error("Font not found: NotoSans-Regular.ttf (checked multiple locations)");
-})();
 
 const router = Router();
 
 // Абсолютный путь от корня репо: data/fonts/NotoSans-Regular.ttf
+const FONT_PATH = path.resolve(process.cwd(), "data", "fonts", "NotoSans-Regular.ttf");
+const FONT_BYTES = fs.readFileSync(FONT_PATH);
 
 async function generatePdfResponse(_req: any, res: any) {
   try {
@@ -58,4 +36,3 @@ router.get("/report/pdf", generatePdfResponse);
 router.post("/report/pdf", generatePdfResponse);
 
 export default router;
-
