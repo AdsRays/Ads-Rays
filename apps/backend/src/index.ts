@@ -90,3 +90,11 @@ async function generatePdfResponse(_req: any, res: any) {
   }
 }
 
+import type { Request, Response } from "express";
+const campaigns = [
+  { id: "cmp_1", name: "Кампания #1", creatives: [{id:"cr_1", name:"Креатив #1"}, {id:"cr_2", name:"Креатив #2"}] },
+  { id: "cmp_2", name: "Кампания #2", creatives: [{id:"cr_3", name:"Креатив #3"}] }
+];
+app.get("/api/campaigns", (_req: Request, res: Response) => {
+  res.json({ items: campaigns });
+});
