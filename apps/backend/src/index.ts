@@ -1,4 +1,4 @@
-﻿import express from "express";
+import express from "express";
 import reportRouter from "./routes/report";import * as fs from "fs";
 import { fileURLToPath } from "url";
 import { PDFDocument, rgb } from "pdf-lib";
@@ -107,4 +107,15 @@ const campaigns = [
     {id:"cr_4", name:"Креатив #4"}, {id:"cr_5", name:"Креатив #5"}, {id:"cr_6", name:"Креатив #6"}] }
 ];
 // Универсальный эндпоинт для Tilda-embed
+app.get("/api/campaigns", (_req, res) => res.json({ items: campaigns }));
+
+const campaigns = [
+  { id: "cmp_1", name: "Кампания #1 (демо)", creatives: [
+    {id:"cr_1", name:"Креатив #1"}, {id:"cr_2", name:"Креатив #2"}] },
+  { id: "cmp_2", name: "Кампания #2 (демо)", creatives: [
+    {id:"cr_3", name:"Креатив #3"}] },
+  { id: "cmp_3", name: "Кампания #3 (демо)", creatives: [
+    {id:"cr_4", name:"Креатив #4"}, {id:"cr_5", name:"Креатив #5"}, {id:"cr_6", name:"Креатив #6"}] }
+];
+// Эндпоинт для Tilda-embed
 app.get("/api/campaigns", (_req, res) => res.json({ items: campaigns }));
