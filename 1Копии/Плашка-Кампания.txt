@@ -1,0 +1,183 @@
+<!-- Вставить целиком в HTML-блок -->
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --width: 1200px;
+  --height: 35px;
+  --bg: #1A2049;
+  --border: #383F70;
+  --radius: 28px;
+  --text-color: #B3B3B3;
+  --icon-circle-bg: #595E81; /* изменено */
+  --icon-plus-color: #B3B3B3; /* изменено */
+  --dot1: #FFF37D;
+  --dot2: #92C681;
+  --font: "PT Sans", Arial, sans-serif;
+}
+
+/* Обёртка (по центру страницы при необходимости) */
+.adsr-row { width: var(--width); margin: 0 auto; }
+
+/* Плашка: сделаем relative, фиксированную ширину/высоту, без flex-изменений */
+.adsr-pill {
+  width: var(--width);
+  height: var(--height);
+  position: relative;    /* чтобы абсолютные координаты детей были внутри плашки */
+  box-sizing: border-box;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  user-select: none;
+  padding: 0;            /* удалил внутренние отступы, позиционируем руками */
+  overflow: visible;
+}
+
+/* Иконка плюс (кружок) — позиция и размер по ТЗ */
+.adsr-pill__icon {
+  position: absolute;
+  left: 10px;                /* x10 */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;               /* 20x20 */
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;       /* вертикальное центрирование */
+  justify-content: center; transform: translateY(-11px);
+  /* горизонтальное центрирование */
+  font-weight: 400;          /* нормальный вес — чтобы визуально не выпирал */
+  font-size: 12px;           /* размер глифа */
+  line-height: 20px;         /* важная строчка: центрирует глиф внутри 20px круга */
+  padding: 0;
+  color: var(--icon-plus-color);
+  background: var(--icon-circle-bg);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-sizing: border-box;
+}
+
+
+/* Первый текст — точная позиция */
+.adsr-pill__text {
+  position: absolute;
+  left: 35px;            /* x35 */
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color);
+  font-family: var(--font);
+  font-size: 14px;       /* 14 */
+  font-weight: 400;      /* Normal */
+  line-height: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 900px;          /* примерно — гарантия обрезки, не менять */
+}
+
+/* Правый блок (meta) — текстовая часть должна начинаться в x976 */
+.adsr-pill__meta {
+  position: absolute;
+  left: 976px;           /* x976: текст "В кампании 2 креатива:" */
+  top: 50%;
+  transform: translateY(-50%);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color: var(--text-color);
+  font-family: var(--font);
+  font-size: 14px;       /* 14 */
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+/* Кружки-креативы — точные координаты внутри плашки */
+.adsr-pill__dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display:inline-block;
+  border:1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.35), inset 0 -1px 0 rgba(0,0,0,0.15);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* конкретные позиции dots (точно по ТЗ) */
+.adsr-pill__dot--yellow{ background: var(--dot1); left: 1143px; } /* x1143 y229 */
+.adsr-pill__dot--green { background: var(--dot2); left: 1169px; } /* x1169 y229 */
+
+/* Панель (скрыта по умолчанию) */
+.adsr-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 260ms ease;
+  margin-top: 10px;
+}
+
+/* Открыто */
+.adsr-open .adsr-panel{ max-height: 420px; }
+
+/* Фокус/hover — оставлено */
+.adsr-pill:focus{ outline: none; box-shadow: 0 0 0 3px rgba(56,63,112,0.12); }
+.adsr-pill:hover{ filter: brightness(1.02); }
+</style>
+
+<div class="adsr-row">
+  <div id="adsrWrapper" class="adsr-wrapper">
+    <div id="adsrPill" class="adsr-pill" role="button" tabindex="0" aria-expanded="false">
+      <div class="adsr-pill__icon" id="adsrIcon">+</div>
+      <div class="adsr-pill__text">Тестовая рекламная кампания № 1</div>
+
+      <!-- правый текст и кружочки: текст в .adsr-pill__meta, кружочки абсолютные -->
+      <div class="adsr-pill__meta">
+  <div class="adsr-pill__meta-text">В кампании<span class="adsr-count" style="display:inline-block;margin:0 4px;color:var(--text-color);font-family:var(--font);font-size:14px;font-weight:400;line-height:22px;">2</span>креатива:</div>
+ 
+</div>
+
+
+
+      <div class="adsr-pill__dot adsr-pill__dot--yellow" title="креатив 1"></div>
+      <div class="adsr-pill__dot adsr-pill__dot--green" title="креатив 2"></div>
+    </div>
+
+    <div class="adsr-panel" aria-hidden="true">
+      <!-- Пример содержимого (не трогал) -->
+      <table style="width:100%; border-collapse:collapse; color:#fff; margin-top:6px; font-family:var(--font); font-size:13px;">
+        <thead><tr><th style="text-align:left; padding:8px 10px; font-weight:600;">Креатив</th><th style="text-align:left; padding:8px 10px;">Показатель</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:8px 10px; border-top:1px solid rgba(255,255,255,0.03);">Креатив #1</td><td style="padding:8px 10px; border-top:1px solid rgba(255,255,255,0.03);">Данные</td></tr>
+          <tr><td style="padding:8px 10px; border-top:1px solid rgba(255,255,255,0.03);">Креатив #2</td><td style="padding:8px 10px; border-top:1px solid rgba(255,255,255,0.03);">Данные</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var wrapper = document.getElementById('adsrWrapper');
+  var pill = document.getElementById('adsrPill');
+  var icon = document.getElementById('adsrIcon');
+
+  function setOpen(open){
+    if(open){
+      wrapper.classList.add('adsr-open');
+      pill.setAttribute('aria-expanded','true');
+      pill.nextElementSibling.setAttribute('aria-hidden','false');
+      icon.textContent = '–';
+    } else {
+      wrapper.classList.remove('adsr-open');
+      pill.setAttribute('aria-expanded','false');
+      pill.nextElementSibling.setAttribute('aria-hidden','true');
+      icon.textContent = '+';
+    }
+  }
+
+  pill.addEventListener('click', function(){ setOpen(!wrapper.classList.contains('adsr-open')); });
+  pill.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(!wrapper.classList.contains('adsr-open')); }
+  });
+})();
+</script>
