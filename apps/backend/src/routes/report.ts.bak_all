@@ -1,0 +1,39 @@
+﻿import { Router } from "express";
+import * as fs from "fs";
+import { PDFDocument, rgb } from "pdf-lib";
+import fontkit from "@pdf-lib/fontkit";
+
+const FONT_PATH = path.resolve(process.cwd(), "data", "fonts", "NotoSans-Regular.ttf");
+const FONT_BYTES = fs.readFileSync(FONT_PATH);
+// путь к TTF относительно этого файла (src/routes → корень → data/fonts)
+
+const router = Router();
+
+async function generatePdfResponse(_req: any, res: any) {
+  try {
+    const pdf = await PDFDocument.create(); pdf.registerFontkit(fontkit); pdf.registerFontkit(fontkit);pdf.registerFontkit(fontkit);
+    pdf.setTitle("Проверка кириллицы - Привет, мир!");
+    pdf.setAuthor("AdsRays"); pdf.setCreator("AdsRays"); pdf.setProducer("AdsRays pdf-lib");
+    const page = pdf.addPage([595, 842]);
+    const font = await pdf.embedFont(FONT_BYTES);
+    const { height } = page.getSize();
+    page.drawText("Hello World (English OK)", { x: 50, y: height - 100, size: 14, font, color: rgb(0,0,0) });
+    page.drawText("Проверка кириллицы: Привет, мир!", { x: 50, y: height - 120, size: 14, font, color: rgb(0,0,0) });
+    const bytes = await pdf.save({ useObjectStreams: false });
+    res.setHeader("Content-Type", "application/pdf");
+    res.send(Buffer.from(bytes));
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("PDF generation error");
+  }
+}
+
+// Оба маршрута:
+router.get("/report/pdf", generatePdfResponse);
+router.post("/report/pdf", generatePdfResponse);
+
+export default router;
+
+
+
+

@@ -1,9 +1,20 @@
-﻿import axios from "axios";
-const api = axios.create({ baseURL: import.meta.env.VITE_API_BASE || "/api" });
+﻿/**
+ * ЕДИНСТВЕННЫЙ источник правды для API-урла:
+ * правится ТОЛЬКО в apps/frontend/.env.local (VITE_API_BASE)
+ */
+export const API_BASE =
+  (import.meta as any)?.env?.VITE_API_BASE
+  ?? (globalThis as any)?.VITE_API_BASE
+  ?? "http://localhost:4050"; // безопасный дефолт для dev
 
-export const getOverview        = async () => (await api.get("/demo/overview")).data;
-export const getRecommendations = async () => (await api.get("/demo/recommendations")).data;
-export const getCreatives       = async () => (await api.get("/demo/creatives")).data;
+export async function generatePdfGET(): Promise<Blob> {
+  const res = await fetch(`${API_BASE}/api/report/pdf`);
+  if (!res.ok) throw new Error(`GET pdf failed ${res.status}`);
+  return res.blob();
+}
 
-export const generatePdf = async (payload: any) =>
-  (await api.post("/report/pdf", payload, { responseType: "blob" })).data;
+export async function generatePdfPOST(): Promise<Blob> {
+  const res = await fetch(`${API_BASE}/api/report/pdf`, { method: "POST" });
+  if (!res.ok) throw new Error(`POST pdf failed ${res.status}`);
+  return res.blob();
+}
