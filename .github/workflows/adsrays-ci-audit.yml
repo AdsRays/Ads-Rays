@@ -10,8 +10,11 @@ on:
 permissions:
   contents: read
 
+env:
+  GITHUB_TOKEN: $\{\{ secrets.GH_RW_TOKEN \}\}
+
 jobs:
-  lint-build:
+lint-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -96,3 +99,4 @@ jobs:
           echo "OPTIONS  with Origin: http://127.0.0.1:5175"
           curl -sS -X OPTIONS -H "Origin: http://127.0.0.1:5175" -H "Access-Control-Request-Method: POST" -H "Access-Control-Request-Headers: Content-Type" -D cors_opt.txt -o /dev/null  || true
           cat cors_opt.txt | grep -iE "HTTP/|access-control-|vary" || true
+
