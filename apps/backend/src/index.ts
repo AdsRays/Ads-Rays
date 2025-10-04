@@ -8,6 +8,7 @@ import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 
 const WHO = "adsrays-cyr-v1";
+import escapeHtml from "escape-html";
 const app = express();
 
 app.use((req, res, next) => {
@@ -83,13 +84,11 @@ app.post("/api/report/pdf", async (_req, res) => {
 });
 
 // Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ 404 (РґРѕР»Р¶РµРЅ РёРґС‚Рё СЃР°РјС‹Рј РїРѕСЃР»РµРґРЅРёРј!)
-const PORT = process.env.PORT ? Number(process.env.PORT) : 4050;
-app.all("*", (req, res) => {
-  const m = escapeHtml(String(req.method ?? ""));
-  const u = escapeHtml(String((req as any).originalUrl ?? req.url ?? ""));
+const PORT = process.env.PORT ? Number(process.env.PORT) : 4050;const u = escapeHtml(String((req as any).originalUrl ?? req.url ?? ""));
   res.status(404)
     .type("text/plain; charset=utf-8")
     .send(Unknown route:  );
 });
 app.listen(PORT, () => console.log(`API running on http://localhost:${PORT} [${WHO}]`));
+
 
