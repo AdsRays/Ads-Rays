@@ -23,7 +23,11 @@ jobs:
           node-version: '22'
           cache: 'pnpm'
 
-      - name: Enable corepack (pnpm)
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9      - name: Enable corepack (pnpm)
         run: corepack enable
 
       - name: Show pnpm version
@@ -94,3 +98,4 @@ jobs:
           echo "OPTIONS \ with Origin: http://127.0.0.1:5175"
           curl -sS -X OPTIONS -H "Origin: http://127.0.0.1:5175" -H "Access-Control-Request-Method: POST" -H "Access-Control-Request-Headers: Content-Type" -D cors_opt.txt -o /dev/null \ || true
           cat cors_opt.txt | grep -iE "HTTP/|access-control-|vary" || true
+
