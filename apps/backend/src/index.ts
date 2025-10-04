@@ -92,3 +92,12 @@ const PORT = process.env.PORT ? Number(process.env.PORT) : 4050;const u = escape
 app.listen(PORT, () => console.log(`API running on http://localhost:${PORT} [${WHO}]`));
 
 
+
+app.all("*", (req, res) => {
+  const msg = \Unknown route: \ \\;
+  res.status(404).type("text/plain").send(msg);
+});
+
+const PORT = process.env.PORT ? Number(process.env.PORT) : 4050;
+app.listen(PORT, () => console.log(\API running on http://localhost:\\));
+
