@@ -88,17 +88,9 @@ const PORT = process.env.PORT ? Number(process.env.PORT) : 4050;const u = escape
   res.status(404)
     .type("text/plain; charset=utf-8")
     .send(Unknown route:  );
-});
-app.listen(PORT, () => console.log(`API running on http://localhost:${PORT} [${WHO}]`));
+});});
 
-
-});
-
-const PORT = process.env.PORT ? Number(process.env.PORT) : 4050;
-app.listen(PORT, () => console.log(\API running on http://localhost:\\));
-
-
-app.get("/__routes", (_req, res) => {
+const PORT = process.env.PORT ? Number(process.env.PORT) : 4050;app.get("/__routes", (_req, res) => {
   try {
     const out = [];
     const stack = (app as any)._router?.stack || [];
@@ -113,13 +105,20 @@ app.get("/__routes", (_req, res) => {
     res.status(500).type("application/json").send(JSON.stringify({ error: String(e) }));
   }
 });
-const PORT = process.env.PORT ? Number(process.env.PORT) : 4050;
-app.listen(PORT, () => {
-  console.log(API running on http://localhost:);
-  // Диагностика: логируем 10 первых маршрутов
+const PORT = process.env.PORT ? Number(process.env.PORT) : 4050;// Диагностика: логируем 10 первых маршрутов
   try {
     const stack = (app as any)._router?.stack || [];
     const list = stack.filter((l:any)=>l.route && l.route.path).slice(0,10).map((l:any)=>${Object.keys(l.route.methods||{}).join(",").toUpperCase()} );
     console.log("[routes]", list);
   } catch {}
+});
+
+app.all("*", (req, res) => {
+  const msg = `Unknown route: ${escapeHtml(req.method)} ${escapeHtml(req.url)}`;
+  res.status(404).type("text/plain").send(msg);
+});
+
+const PORT = process.env.PORT ? Number(process.env.PORT) : 4050;
+app.listen(PORT, () => {
+  console.log(`API running on http://localhost:${PORT}`);
 });
