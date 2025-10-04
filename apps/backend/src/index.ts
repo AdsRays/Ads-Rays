@@ -1,4 +1,4 @@
-﻿import escapeHtml from 'escape-html';
+import escapeHtml from 'escape-html';
 import * as cors from 'cors';
 import * as express from 'express';
 import reportRouter from "./routes/report";
@@ -10,6 +10,11 @@ import fontkit from "@pdf-lib/fontkit";
 const WHO = "adsrays-cyr-v1";
 import escapeHtml from "escape-html";
 const app = express();
+
+// Явная обработка OPTIONS для /api/report/pdf
+app.options("/api/report/pdf", (req, res) => {
+  res.status(204).end();
+});
 
 app.use((req, res, next) => {
   const origin = req.headers.origin || "*";
@@ -40,7 +45,7 @@ app.get("/__version", (req, res) => {
 app.get("/api/campaigns", (req, res) => {
   const list = [
     { id: 'cmp-1', name: 'РўРµСЃС‚РѕРІР°СЏ РєР°РјРїР°РЅРёСЏ 1', status: 'ACTIVE' },
-    { id: 'cmp-2', name: 'РўРµСЃС‚РѕРІР°СЏ РєР°РјРїР°РЅРёСЏ 2', status: 'PAUSED' }
+    { id: 'cmp-2', name: 'РўРµСЃС‚РѕРІР°СЏ РєРјРїР°РЅРёСЏ 2', status: 'PAUSED' }
   ];
   res.status(200).json(list);
 });
