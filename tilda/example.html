@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdsRays Widget Example</title>
+    <style>
+        body {
+            background: #0d1117;
+            padding: 40px;
+            font-family: 'PT Sans', Arial, sans-serif;
+            color: white;
+        }
+        .section {
+            margin-bottom: 60px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .description {
+            color: #8b949e;
+            margin-bottom: 20px;
+        }
+        .code {
+            background: #161b22;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h1>1. С подключением к API (data-api)</h1>
+        <div class="description">
+            Данные загружаются с сервера. Если API недоступен, используются резервные данные.
+        </div>
+        <div class="code">
+            &lt;div id="adsr-root"&gt;&lt;/div&gt;<br>
+            &lt;script src="embed.js" data-root="adsr-root" data-api="http://localhost:4050"&gt;&lt;/script&gt;
+        </div>
+        <div id="adsr-root"></div>
+    </div>
+
+    <div class="section">
+        <h1>2. Без API (fallback данные)</h1>
+        <div class="description">
+            Используются встроенные тестовые данные.
+        </div>
+        <div class="code">
+            &lt;div id="adsr-root-fallback"&gt;&lt;/div&gt;<br>
+            &lt;script src="embed.js" data-root="adsr-root-fallback"&gt;&lt;/script&gt;
+        </div>
+        <div id="adsr-root-fallback"></div>
+    </div>
+
+    <!-- With API integration -->
+    <script src="embed.js" data-root="adsr-root" data-api="http://localhost:4050"></script>
+    
+    <!-- Without API (fallback) -->
+    <script src="embed.js" data-root="adsr-root-fallback"></script>
+</body>
+</html>
