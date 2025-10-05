@@ -116,14 +116,12 @@
     document.head.appendChild(style);
   }
 
-  // Данные для примера — можно заменить на динамические (например, с API)
-  var campaigns = [
-    { name: "Тестовая рекламная кампания № 1", creatives: 2 },
-    { name: "Тестовая рекламная кампания № 2", creatives: 2 },
-    { name: "Тестовая рекламная кампания № 3", creatives: 2 }
-  ];
-
-  campaigns.forEach(function(campaign, idx) {
+  // Получаем API URL из атрибута data-api
+  var apiUrl = scriptTag.getAttribute('data-api');
+  
+  // Функция для рендеринга кампаний
+  function renderCampaigns(campaigns) {
+    campaigns.forEach(function(campaign, idx) {
     var row = document.createElement('div');
     row.className = 'adsr-row';
 
@@ -199,5 +197,32 @@
     pill.addEventListener('keydown', function(e){
       if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(!wrapper.classList.contains('adsr-open')); }
     });
-  });
+    });
+  }
+
+  // Данные для примера (fallback если API недоступен)
+  var fallbackCampaigns = [
+    { name: "Тестовая рекламная кампания № 1", creatives: 2 },
+    { name: "Тестовая рекламная кампания № 2", creatives: 2 },
+    { name: "Тестовая рекламная кампания № 3", creatives: 2 }
+  ];
+
+  // Если указан data-api, пытаемся загрузить данные с API
+  if (apiUrl) {
+    fetch(apiUrl + '/api/campaigns')
+      .then(function(response) {
+        if (!response.ok) throw new Error('API error');
+        return response.json();
+      })
+      .then(function(campaigns) {
+        renderCampaigns(campaigns);
+      })
+      .catch(function(error) {
+        console.warn('Failed to load campaigns from API, using fallback data:', error);
+        renderCampaigns(fallbackCampaigns);
+      });
+  } else {
+    // Если data-api не указан, используем fallback данные
+    renderCampaigns(fallbackCampaigns);
+  }
 })();
