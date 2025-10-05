@@ -1,13 +1,13 @@
+import * as fs from "fs";
+import { fileURLToPath } from "url";
+
 import escapeHtml from 'escape-html';
 import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
-import reportRouter from "./routes/report.js";
-import * as fs from "fs";
-import { fileURLToPath } from "url";
 import { PDFDocument, rgb } from "pdf-lib";
-import fontkit from "@pdf-lib/fontkit";
 
-const WHO = "adsrays-cyr-v1";
+import reportRouter from "./routes/report.js";
+
 const app = express();
 
 // Явная обработка OPTIONS для /api/report/pdf
@@ -90,7 +90,8 @@ app.post("/api/report/pdf", async (_req: Request, res: Response) => {
 // Диагностический маршрут для вывода всех зарегистрированных роутов
 app.get("/__routes", (_req: Request, res: Response) => {
   try {
-    const out = [];
+    const out: { method: string; path: string }[] = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const stack = (app as any)._router?.stack || [];
     for (const layer of stack) {
       if (layer.route && layer.route.path) {
@@ -115,8 +116,12 @@ app.listen(PORT, () => {
   console.log(`API running on http://localhost:${PORT}`);
   // Диагностика: логируем 10 первых маршрутов
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const stack = (app as any)._router?.stack || [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const list = stack.filter((l:any)=>l.route && l.route.path).slice(0,10).map((l:any)=>`${Object.keys(l.route.methods||{}).join(",").toUpperCase()} ${l.route.path}`);
     console.log("[routes]", list);
-  } catch {}
+  } catch {
+    // Ignore diagnostic errors
+  }
 });
