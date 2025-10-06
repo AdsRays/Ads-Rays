@@ -1,0 +1,1 @@
+﻿(function(){var s=document.createElement('div');s.style.cssText='color:#e6e8eb;font-family:Arial;padding:12px';s.innerHTML='AdsRays embed подключён';(document.getElementById((document.currentScript.getAttribute('data-root')||'adsr-root'))||document.body).appendChild(s);})();
