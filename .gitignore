@@ -42,3 +42,4 @@ Thumbs.db
 .env
 .env.*.local
 apps/frontend/.env.local
+.vercel

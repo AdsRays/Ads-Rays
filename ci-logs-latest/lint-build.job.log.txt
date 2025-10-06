@@ -1,0 +1,142 @@
+﻿2025-10-04T08:32:50.8954118Z Current runner version: '2.328.0'
+2025-10-04T08:32:50.8986311Z ##[group]Runner Image Provisioner
+2025-10-04T08:32:50.8987473Z Hosted Compute Agent
+2025-10-04T08:32:50.8988384Z Version: 20250912.392
+2025-10-04T08:32:50.8989304Z Commit: d921fda672a98b64f4f82364647e2f10b2267d0b
+2025-10-04T08:32:50.8990450Z Build Date: 2025-09-12T15:23:14Z
+2025-10-04T08:32:50.8991515Z ##[endgroup]
+2025-10-04T08:32:50.8992266Z ##[group]Operating System
+2025-10-04T08:32:50.8993156Z Ubuntu
+2025-10-04T08:32:50.8993997Z 24.04.3
+2025-10-04T08:32:50.8994741Z LTS
+2025-10-04T08:32:50.8995878Z ##[endgroup]
+2025-10-04T08:32:50.8996797Z ##[group]Runner Image
+2025-10-04T08:32:50.8997704Z Image: ubuntu-24.04
+2025-10-04T08:32:50.8998461Z Version: 20250929.60.1
+2025-10-04T08:32:50.9000225Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250929.60/images/ubuntu/Ubuntu2404-Readme.md
+2025-10-04T08:32:50.9002837Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250929.60
+2025-10-04T08:32:50.9004549Z ##[endgroup]
+2025-10-04T08:32:50.9006317Z ##[group]GITHUB_TOKEN Permissions
+2025-10-04T08:32:50.9008789Z Contents: read
+2025-10-04T08:32:50.9009662Z Metadata: read
+2025-10-04T08:32:50.9010598Z ##[endgroup]
+2025-10-04T08:32:50.9013851Z Secret source: Actions
+2025-10-04T08:32:50.9014917Z Prepare workflow directory
+2025-10-04T08:32:50.9473110Z Prepare all required actions
+2025-10-04T08:32:50.9529297Z Getting action download info
+2025-10-04T08:32:51.2065949Z Download action repository 'actions/checkout@v4' (SHA:08eba0b27e820071cde6df949e0beb9ba4906955)
+2025-10-04T08:32:51.3941840Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2025-10-04T08:32:51.7806208Z Complete job name: lint-build
+2025-10-04T08:32:51.8580691Z ##[group]Run actions/checkout@v4
+2025-10-04T08:32:51.8582515Z with:
+2025-10-04T08:32:51.8583666Z   repository: AdsRays/Ads-Rays
+2025-10-04T08:32:51.8585521Z   token: ***
+2025-10-04T08:32:51.8586695Z   ssh-strict: true
+2025-10-04T08:32:51.8587848Z   ssh-user: git
+2025-10-04T08:32:51.8589016Z   persist-credentials: true
+2025-10-04T08:32:51.8590320Z   clean: true
+2025-10-04T08:32:51.8591487Z   sparse-checkout-cone-mode: true
+2025-10-04T08:32:51.8592791Z   fetch-depth: 1
+2025-10-04T08:32:51.8593903Z   fetch-tags: false
+2025-10-04T08:32:51.8594985Z   show-progress: true
+2025-10-04T08:32:51.8596291Z   lfs: false
+2025-10-04T08:32:51.8597425Z   submodules: false
+2025-10-04T08:32:51.8598626Z   set-safe-directory: true
+2025-10-04T08:32:51.8600270Z ##[endgroup]
+2025-10-04T08:32:51.9781827Z Syncing repository: AdsRays/Ads-Rays
+2025-10-04T08:32:51.9785027Z ##[group]Getting Git version info
+2025-10-04T08:32:51.9786913Z Working directory is '/home/runner/work/Ads-Rays/Ads-Rays'
+2025-10-04T08:32:51.9789487Z [command]/usr/bin/git version
+2025-10-04T08:32:51.9863913Z git version 2.51.0
+2025-10-04T08:32:51.9891334Z ##[endgroup]
+2025-10-04T08:32:51.9905771Z Temporarily overriding HOME='/home/runner/work/_temp/229b42dc-f73a-406e-b41a-6727eb93d098' before making global git config changes
+2025-10-04T08:32:51.9907450Z Adding repository directory to the temporary git global config as a safe directory
+2025-10-04T08:32:51.9911107Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Ads-Rays/Ads-Rays
+2025-10-04T08:32:51.9947985Z Deleting the contents of '/home/runner/work/Ads-Rays/Ads-Rays'
+2025-10-04T08:32:51.9951634Z ##[group]Initializing the repository
+2025-10-04T08:32:51.9955213Z [command]/usr/bin/git init /home/runner/work/Ads-Rays/Ads-Rays
+2025-10-04T08:32:52.0090418Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-10-04T08:32:52.0091768Z hint: is subject to change. To configure the initial branch name to use in all
+2025-10-04T08:32:52.0092962Z hint: of your new repositories, which will suppress this warning, call:
+2025-10-04T08:32:52.0093879Z hint:
+2025-10-04T08:32:52.0094591Z hint: 	git config --global init.defaultBranch <name>
+2025-10-04T08:32:52.0095537Z hint:
+2025-10-04T08:32:52.0096316Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-10-04T08:32:52.0098356Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-10-04T08:32:52.0099346Z hint:
+2025-10-04T08:32:52.0099942Z hint: 	git branch -m <name>
+2025-10-04T08:32:52.0100601Z hint:
+2025-10-04T08:32:52.0101455Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-10-04T08:32:52.0102788Z Initialized empty Git repository in /home/runner/work/Ads-Rays/Ads-Rays/.git/
+2025-10-04T08:32:52.0109646Z [command]/usr/bin/git remote add origin https://github.com/AdsRays/Ads-Rays
+2025-10-04T08:32:52.0146476Z ##[endgroup]
+2025-10-04T08:32:52.0147568Z ##[group]Disabling automatic garbage collection
+2025-10-04T08:32:52.0150350Z [command]/usr/bin/git config --local gc.auto 0
+2025-10-04T08:32:52.0178423Z ##[endgroup]
+2025-10-04T08:32:52.0179420Z ##[group]Setting up auth
+2025-10-04T08:32:52.0185040Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-10-04T08:32:52.0216523Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-10-04T08:32:52.0626591Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-10-04T08:32:52.0655866Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-10-04T08:32:52.0874491Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-10-04T08:32:52.0918155Z ##[endgroup]
+2025-10-04T08:32:52.0919286Z ##[group]Fetching the repository
+2025-10-04T08:32:52.0927313Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +3938c1748288af856a7866a5021a49bfefbc049c:refs/remotes/pull/2/merge
+2025-10-04T08:32:52.4177757Z From https://github.com/AdsRays/Ads-Rays
+2025-10-04T08:32:52.4179609Z  * [new ref]         3938c1748288af856a7866a5021a49bfefbc049c -> pull/2/merge
+2025-10-04T08:32:52.4211539Z ##[endgroup]
+2025-10-04T08:32:52.4212206Z ##[group]Determining the checkout info
+2025-10-04T08:32:52.4213607Z ##[endgroup]
+2025-10-04T08:32:52.4218969Z [command]/usr/bin/git sparse-checkout disable
+2025-10-04T08:32:52.4261660Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-10-04T08:32:52.4289992Z ##[group]Checking out the ref
+2025-10-04T08:32:52.4294411Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/2/merge
+2025-10-04T08:32:52.4506982Z Note: switching to 'refs/remotes/pull/2/merge'.
+2025-10-04T08:32:52.4508216Z 
+2025-10-04T08:32:52.4508925Z You are in 'detached HEAD' state. You can look around, make experimental
+2025-10-04T08:32:52.4511182Z changes and commit them, and you can discard any commits you make in this
+2025-10-04T08:32:52.4513259Z state without impacting any branches by switching back to a branch.
+2025-10-04T08:32:52.4514480Z 
+2025-10-04T08:32:52.4515201Z If you want to create a new branch to retain commits you create, you may
+2025-10-04T08:32:52.4517232Z do so (now or later) by using -c with the switch command. Example:
+2025-10-04T08:32:52.4518283Z 
+2025-10-04T08:32:52.4518590Z   git switch -c <new-branch-name>
+2025-10-04T08:32:52.4519280Z 
+2025-10-04T08:32:52.4519599Z Or undo this operation with:
+2025-10-04T08:32:52.4520245Z 
+2025-10-04T08:32:52.4520495Z   git switch -
+2025-10-04T08:32:52.4520962Z 
+2025-10-04T08:32:52.4521803Z Turn off this advice by setting config variable advice.detachedHead to false
+2025-10-04T08:32:52.4523223Z 
+2025-10-04T08:32:52.4524926Z HEAD is now at 3938c17 Merge b2f490157498bdbbac8be1b20382bbd770c40cc3 into f40c0b427b5296d3060d9063618d45088e1e46bb
+2025-10-04T08:32:52.4529135Z ##[endgroup]
+2025-10-04T08:32:52.4556930Z [command]/usr/bin/git log -1 --format=%H
+2025-10-04T08:32:52.4579010Z 3938c1748288af856a7866a5021a49bfefbc049c
+2025-10-04T08:32:52.4874184Z ##[group]Run actions/setup-node@v4
+2025-10-04T08:32:52.4874935Z with:
+2025-10-04T08:32:52.4875492Z   node-version: 20.x
+2025-10-04T08:32:52.4876008Z   cache: pnpm
+2025-10-04T08:32:52.4876459Z   always-auth: false
+2025-10-04T08:32:52.4876980Z   check-latest: false
+2025-10-04T08:32:52.4877783Z   token: ***
+2025-10-04T08:32:52.4878221Z ##[endgroup]
+2025-10-04T08:32:52.9886090Z Found in cache @ /opt/hostedtoolcache/node/20.19.5/x64
+2025-10-04T08:32:52.9892684Z ##[group]Environment details
+2025-10-04T08:32:59.6424649Z node: v20.19.5
+2025-10-04T08:32:59.6425093Z npm: 10.8.2
+2025-10-04T08:32:59.6425804Z yarn: 1.22.22
+2025-10-04T08:32:59.6426729Z ##[endgroup]
+2025-10-04T08:32:59.6476115Z ##[error]Unable to locate executable file: pnpm. Please verify either the file path exists or the file can be found within a directory specified by the PATH environment variable. Also check the file mode to verify the file is executable.
+2025-10-04T08:32:59.6704880Z Post job cleanup.
+2025-10-04T08:32:59.7636183Z [command]/usr/bin/git version
+2025-10-04T08:32:59.7671706Z git version 2.51.0
+2025-10-04T08:32:59.7714463Z Temporarily overriding HOME='/home/runner/work/_temp/ae3418ae-d65e-4d90-881f-be2f021a864d' before making global git config changes
+2025-10-04T08:32:59.7715260Z Adding repository directory to the temporary git global config as a safe directory
+2025-10-04T08:32:59.7727303Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Ads-Rays/Ads-Rays
+2025-10-04T08:32:59.7761381Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-10-04T08:32:59.7792642Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-10-04T08:32:59.8023039Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-10-04T08:32:59.8043138Z http.https://github.com/.extraheader
+2025-10-04T08:32:59.8055282Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-10-04T08:32:59.8084897Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-10-04T08:32:59.8404422Z Cleaning up orphan processes

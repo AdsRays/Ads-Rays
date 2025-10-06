@@ -1,0 +1,112 @@
+﻿name: AdsRays CI Audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+<<<<<<< HEAD
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9      - name: Enable corepack (pnpm)
+=======
+      - name: Setup pnpm (corepack)
+        run: |
+          corepack enable
+          corepack prepare pnpm@9 --activate
+      - name: Show pnpm version
+        run: pnpm -v
+      - name: Install deps (workspace)
+        run: pnpm install --no-frozen-lockfile      - name: Enable corepack (pnpm)
+>>>>>>> origin/main
+        run: corepack enable
+
+      - name: Show pnpm version
+        run: pnpm -v
+
+      - name: Install deps (workspace)
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Typecheck backend (noEmit)
+        run: pnpm --filter @adsrays/backend exec tsc --noEmit
+
+      - name: Typecheck frontend (noEmit)
+        run: pnpm --filter @adsrays/frontend exec tsc --noEmit
+
+      - name: ESLint (best-effort)
+        run: pnpm exec eslint . --ext .ts,.tsx || true
+
+      - name: Build backend
+        run: pnpm --filter @adsrays/backend run build || pnpm --filter @adsrays/backend exec tsc
+
+  render-smoke:
+    needs: [lint-build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Smoke Render /healthz
+        run: |
+          set -e
+          URL="https://adsrays-api.onrender.com"
+          echo "GET \/healthz"
+          curl -sSf \/healthz | tee healthz.txt
+
+      - name: Smoke Render /__whoami (optional)
+        run: |
+          URL="https://adsrays-api.onrender.com"
+          echo "TRY \/__whoami"
+          curl -sS -w "HTTP %{http_code}\n" -o whoami.txt \/__whoami || true
+          echo "Status above can be !=200 (endpoint optional)."
+
+      - name: Smoke Render /api/campaigns (JSON 200)
+        run: |
+          set -e
+          URL="https://adsrays-api.onrender.com/api/campaigns"
+          echo "GET \"
+          curl -sS -D headers.txt -o campaigns.json \
+          echo "HEADERS:"
+          cat headers.txt
+          echo "First 200 bytes of body:"
+          head -c 200 campaigns.json | xxd
+
+      - name: Smoke Render PDF (GET and POST)
+        run: |
+          set -e
+          B="https://adsrays-api.onrender.com/api/report/pdf"
+          echo "GET \ -> cloud-get.pdf"
+          curl -sS -D get_headers.txt -o cloud-get.pdf \
+          echo "POST \ -> cloud-post.pdf"
+          curl -sS -X POST -H "Content-Type: application/json" -d '{}' -D post_headers.txt -o cloud-post.pdf \
+          echo "Headers (GET):";  cat get_headers.txt
+          echo "Headers (POST):"; cat post_headers.txt
+          echo "First 4 bytes (GET):";  head -c 4 cloud-get.pdf  | xxd
+          echo "First 4 bytes (POST):"; head -c 4 cloud-post.pdf | xxd
+          echo "Expect %PDF- in both."
+
+      - name: CORS preflight (OPTIONS)
+        run: |
+          set -e
+          B="https://adsrays-api.onrender.com/api/report/pdf"
+          echo "OPTIONS \ with Origin: http://127.0.0.1:5175"
+          curl -sS -X OPTIONS -H "Origin: http://127.0.0.1:5175" -H "Access-Control-Request-Method: POST" -H "Access-Control-Request-Headers: Content-Type" -D cors_opt.txt -o /dev/null \ || true
+          cat cors_opt.txt | grep -iE "HTTP/|access-control-|vary" || true
+

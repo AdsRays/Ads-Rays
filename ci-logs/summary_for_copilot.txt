@@ -1,0 +1,13 @@
+﻿PR #2, ветка fix/backend-index-syntax
+
+=== RUN 18241265275 :: CodeQL :: status=completed conclusion=success
+url: https://github.com/AdsRays/Ads-Rays/actions/runs/18241265275
+
+=== RUN 18241264770 :: .github/workflows/adsrays-ci-audit.yml :: status=completed conclusion=failure
+url: https://github.com/AdsRays/Ads-Rays/actions/runs/18241264770
+
+=== RUN 18241211398 :: CodeQL :: status=completed conclusion=success
+url: https://github.com/AdsRays/Ads-Rays/actions/runs/18241211398
+
+=== RUN 18241211005 :: .github/workflows/adsrays-ci-audit.yml :: status=completed conclusion=failure
+url: https://github.com/AdsRays/Ads-Rays/actions/runs/18241211005
