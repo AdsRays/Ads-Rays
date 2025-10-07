@@ -10,11 +10,7 @@ import reportRouter from "./routes/report.js";
 
 const app = express();
 
-// Явная обработка OPTIONS для /api/report/pdf
-app.options("/api/report/pdf", (req: Request, res: Response) => {
-  res.status(204).end();
-});
-
+// CORS middleware должен быть первым для обработки preflight запросов
 app.use((req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin || "*";
   res.setHeader('Vary', 'Origin');
@@ -26,6 +22,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 app.use(express.json());
 app.use("/api", reportRouter);
+
+// Статическая раздача файлов из public
+const PUBLIC_PATH = fileURLToPath(new URL("../../../public", import.meta.url));
+app.use(express.static(PUBLIC_PATH));
+
 app.use((req: Request, _res: Response, next: NextFunction) => { console.log(`${req.method} ${req.url}`); next(); });
 
 const FONT_PATH = fileURLToPath(new URL("../../../data/fonts/NotoSans-Regular.ttf", import.meta.url));
@@ -42,6 +43,15 @@ app.get("/__version", (req: Request, res: Response) => {
 
 // список кампаний (json)
 app.get("/api/campaigns", (req: Request, res: Response) => {
+  const list = [
+    { id: 'cmp-1', name: 'Тестовая кампания 1', status: 'ACTIVE', creatives: 2 },
+    { id: 'cmp-2', name: 'Тестовая кампания 2', status: 'PAUSED', creatives: 2 }
+  ];
+  res.status(200).json(list);
+});
+
+// proxy для кампаний - для внешних встраиваний (Tilda и т.д.)
+app.get("/api/proxy/campaigns", (req: Request, res: Response) => {
   const list = [
     { id: 'cmp-1', name: 'Тестовая кампания 1', status: 'ACTIVE', creatives: 2 },
     { id: 'cmp-2', name: 'Тестовая кампания 2', status: 'PAUSED', creatives: 2 }

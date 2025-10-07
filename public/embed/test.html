@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdsRays Embed Test - Proxy Endpoint</title>
+    <style>
+        body {
+            background: #0d1117;
+            padding: 40px;
+            font-family: 'PT Sans', Arial, sans-serif;
+            color: white;
+        }
+        .section {
+            margin-bottom: 60px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .description {
+            color: #8b949e;
+            margin-bottom: 20px;
+        }
+        .code {
+            background: #161b22;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h1>AdsRays Widget - Proxy Endpoint Test</h1>
+        <div class="description">
+            Этот виджет использует /api/proxy/campaigns endpoint для получения данных с поддержкой CORS.
+        </div>
+        <div class="code">
+            &lt;div id="adsr-root"&gt;&lt;/div&gt;<br>
+            &lt;script src="/embed/adsr.js" data-root="adsr-root" data-api="http://localhost:4050"&gt;&lt;/script&gt;
+        </div>
+        <div id="adsr-root"></div>
+    </div>
+
+    <script src="/embed/adsr.js" data-root="adsr-root" data-api="http://localhost:4050"></script>
+</body>
+</html>
