@@ -11,13 +11,14 @@ export default function Home({ html }: Props) {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const filePath = path.join(process.cwd(), "apps/site/public/tilda.html");
+  // Определяем путь именно от корня site
+  const filePath = path.join(__dirname, "..", "public", "tilda.html");
   let html = "";
 
   try {
     html = fs.readFileSync(filePath, "utf8");
   } catch (err) {
-    console.error("Ошибка чтения файла Tilda:", err);
+    console.error("Ошибка чтения Tilda HTML:", err);
   }
 
   return {
