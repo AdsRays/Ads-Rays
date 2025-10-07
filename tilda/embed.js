@@ -1,4 +1,15 @@
-﻿(function(){
+﻿/**
+ * AdsRays Widget — embed script для загрузки кампаний
+ * 
+ * ВАЖНО: Весь код обёрнут в IIFE (Immediately Invoked Function Expression)
+ * для совместимости с обычными браузерными <script> тегами.
+ * 
+ * Асинхронная загрузка данных реализована через Promise chains (.then()),
+ * а НЕ через top-level await, т.к. top-level await работает только
+ * в ES-модулях (script type="module"), что несовместимо с простым
+ * подключением через <script src="embed.js">.
+ */
+(function(){
   // Определяем <script> и корневой контейнер
   var scriptTag = document.currentScript || (function(){var s=document.getElementsByTagName("script");return s[s.length-1]})();
   var rootId   = (scriptTag && scriptTag.getAttribute("data-root")) || "adsr-root";
@@ -140,6 +151,8 @@
   }
 
   function safeFetchJSON(url){
+    // Асинхронная загрузка через Promise chain (не async/await!)
+    // для совместимости с обычными <script> тегами
     return fetch(url, { credentials:"omit" })
       .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
       .then(function(txt){
@@ -149,6 +162,8 @@
       .catch(function(err){ console.warn("[adsrays] fetch error:", err && err.message); return []; });
   }
 
+  // Загружаем данные кампаний асинхронно через IIFE + Promise chain
+  // Это гарантирует совместимость с браузерными <script> без type="module"
   if(apiUrl){
     // Ожидаем, что эндпоинт вернёт массив кампаний; если меньше 3 — дополним.
     safeFetchJSON(apiUrl).then(function(list){ render(Array.isArray(list)?list:[]); });
