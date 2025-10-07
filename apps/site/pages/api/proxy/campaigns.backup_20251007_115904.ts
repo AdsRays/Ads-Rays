@@ -18,3 +18,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Пример заглушки: вернём пустой массив
   return res.status(200).json([]);
 }
+
