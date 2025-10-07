@@ -11,8 +11,12 @@ export default function Home({ html }: Props) {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  // Определяем путь именно от корня site
-  const filePath = path.join(__dirname, "..", "public", "tilda.html");
+  // Универсальный путь для локали и Vercel
+  const baseDir = process.env.VERCEL
+    ? path.join(process.cwd(), "public") // внутри Vercel
+    : path.join(process.cwd(), "apps/site/public"); // локально
+
+  const filePath = path.join(baseDir, "tilda.html");
   let html = "";
 
   try {
