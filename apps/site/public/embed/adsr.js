@@ -6,6 +6,14 @@
 
   const container = document.createElement("div");
   container.style.width = "100%";
+container.style.maxWidth = "1200px";
+container.style.margin = "0 auto";
+container.style.display = "flex";
+container.style.flexDirection = "column";
+container.style.alignItems = "stretch";
+container.style.boxSizing = "border-box";
+container.style.padding = "0 20px";
+container.style.gap = "10px";
   container.style.maxWidth = "1200px";
   container.style.margin = "0 auto";
   container.style.display = "flex";
@@ -18,8 +26,8 @@
 
   function createTile(data) {
     const tile = document.createElement("div");
-    tile.style.width = "90%";
-    tile.style.maxWidth = "1200px";
+    tile.style.width = "100%";
+    tile.style.maxWidth = "100%";
     tile.style.minWidth = "320px";
     tile.style.height = "35px";
     tile.style.display = "flex";
@@ -135,3 +143,4 @@
       container.appendChild(msg);
     });
 })();
+
