@@ -128,21 +128,27 @@ container.style.gap = "10px";
     container.appendChild(panel);
   }
 
-  fetch(apiUrl)
-    .then((r) => r.json())
-    .then((data) => {
-      container.innerHTML = "";
-      data.forEach(createTile);
-    })
-    .catch((err) => {
-      console.error("Ошибка загрузки:", err);
-      const msg = document.createElement("div");
-      msg.textContent = "Ошибка загрузки данных";
-      msg.style.color = "red";
-      msg.style.marginTop = "20px";
-      container.appendChild(msg);
-    });
+      try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      const text = await response.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        console.error('Ошибка парсинга JSON:', text);
+        root.innerHTML = '<div style="color:red;text-align:center;">Ошибка чтения данных</div>';
+        return;
+      }
+      if (Array.isArray(data)) renderCampaigns(data);
+      else if (data?.campaigns) renderCampaigns(data.campaigns);
+      else throw new Error('Неверный формат данных');
+    } catch (err) {
+      console.error('Ошибка загрузки:', err);
+      root.innerHTML = '<div style="color:red;text-align:center;">Ошибка загрузки данных</div>';
+    }
 })();
+
 
 
 
