@@ -1,0 +1,25 @@
+﻿==========================================
+  ADSRAYS — СТАБИЛЬНАЯ ВЕРСИЯ ЗАФИКСИРОВАНА
+==========================================
+
+Дата фиксации: 2025-10-07 12:18:01
+Ветка: stable/cors-embed-works-20251007_1217
+Тег: stable/cors-embed-works
+Прод-деплой: https://site-jm67k1fl1-adsrays.vercel.app
+
+Статус: ✅ Всё работает
+ - CORS OK
+ - 3 плашки на Тильде
+ - API /proxy/campaigns возвращает 200
+ - Проверено на https://ponomarchuk.com.ua/page82875186.html
+
+Откат к этой версии (если что-то сломается):
+-------------------------------------------------
+git checkout stable/cors-embed-works-20251007_1217
+npx vercel --prod
+
+Или по тегу:
+git checkout tags/stable/cors-embed-works
+
+Файл резервной копии API: apps/site/pages/api/proxy/campaigns.backup_*
+==========================================

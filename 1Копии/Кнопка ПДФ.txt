@@ -1,0 +1,15 @@
+<button id="pdfBtn">Сохранить отчёт в PDF</button>
+<script>
+  const API_BASE = "https://adsrays-api.onrender.com"; // твой URL Render
+  document.getElementById('pdfBtn').onclick = async () => {
+    try {
+      const r = await fetch(`${API_BASE}/api/report/pdf`, { method: "POST" });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const blob = await r.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'report.pdf'; a.click();
+      URL.revokeObjectURL(url);
+    } catch(e) { alert('Ошибка: ' + e.message); }
+  };
+</script>
