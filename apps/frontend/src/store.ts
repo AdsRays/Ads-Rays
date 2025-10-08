@@ -37,4 +37,3 @@ export const useAppStore = create<State>(set => ({
 export type { ForecastParams, ForecastResult };
 
 
-

@@ -1,20 +1,22 @@
-﻿/**
- * ЕДИНСТВЕННЫЙ источник правды для API-урла:
- * правится ТОЛЬКО в apps/frontend/.env.local (VITE_API_BASE)
- */
-export const API_BASE =
-  (import.meta as any)?.env?.VITE_API_BASE
-  ?? (globalThis as any)?.VITE_API_BASE
-  ?? "http://localhost:4050"; // безопасный дефолт для dev
+import axios from 'axios';
+import type { ForecastParams } from './store';
 
-export async function generatePdfGET(): Promise<Blob> {
-  const res = await fetch(`${API_BASE}/api/report/pdf`);
-  if (!res.ok) throw new Error(`GET pdf failed ${res.status}`);
-  return res.blob();
-}
+const api = axios.create({ baseURL: import.meta.env.VITE_API_BASE || '/api' });
 
-export async function generatePdfPOST(): Promise<Blob> {
-  const res = await fetch(`${API_BASE}/api/report/pdf`, { method: "POST" });
-  if (!res.ok) throw new Error(`POST pdf failed ${res.status}`);
-  return res.blob();
-}
+export const getOverview = () => api.get('/api/demo/overview').then(r => r.data);
+export const getRecommendations = () => api.get('/api/demo/recommendations').then(r => r.data);
+export const getCreatives = () => api.get('/api/demo/creatives').then(r => r.data);
+export const postForecast = (body: ForecastParams) => api.post('/api/demo/forecast', body).then(r => r.data);
+export const uploadCsv = (file: File) => {
+  const fd = new FormData();
+  fd.append('file', file);
+  return api.post('/api/audit/upload-csv', fd).then(r => r.data);
+};
+export const uploadScreenshot = (file: File) => {
+  const fd = new FormData();
+  fd.append('image', file);
+  return api.post('/api/audit/upload-screenshot', fd).then(r => r.data);
+};
+export const generatePdf = (payload: any) => api.post('/api/report/pdf', payload, { responseType: 'blob' }).then(r => r.data);
+
+
