@@ -1,5 +1,8 @@
 {
   "builds": [
-    { "src": "apps/site/public/**", "use": "@vercel/static" }
+    {
+      "src": "apps/site/public/**/*",
+      "use": "@vercel/static"
+    }
   ]
 }
